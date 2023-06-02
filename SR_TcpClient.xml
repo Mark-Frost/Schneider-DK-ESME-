@@ -1,0 +1,699 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="" productName="Machine Expert Logic Builder" productVersion="V21.0.22.0" creationDateTime="2023-06-02T14:15:08.4823286" />
+  <contentHeader name="Untitled47" version="0.0.0.0" modificationDateTime="2023-06-02T10:41:04.8480725" author="SESA640032">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation>
+          <property name="Author" type="string">SESA640032</property>
+          <property name="Company" type="string" />
+          <property name="DefaultNamespace" type="string">TcpUdpCommunicationExample</property>
+          <property name="Description" type="string" />
+          <property name="Project" type="string">Untitled47</property>
+          <property name="Title" type="string">Untitled47</property>
+          <property name="Version" type="version">0.0.0.0</property>
+        </ProjectInformation>
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="SR_TcpClient" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="sIpAddrServer">
+              <type>
+                <string length="15" />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> IP address of the TCP server</xhtml>
+              </documentation>
+            </variable>
+            <variable name="uiTcpServerPort">
+              <type>
+                <UINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Port of the TCP server</xhtml>
+              </documentation>
+            </variable>
+            <variable name="stTlsSettings">
+              <type>
+                <derived name="TcpUdp.ST_TlsSettingsClient" />
+              </type>
+            </variable>
+            <variable name="xUseTls">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="xComInProgress">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> indicates the TCP communication is in progress</xhtml>
+              </documentation>
+            </variable>
+            <variable name="etTcpClientState">
+              <type>
+                <derived name="TCPUDP.ET_State" />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> state of the TCP connection</xhtml>
+              </documentation>
+            </variable>
+            <variable name="etTcpClientResult">
+              <type>
+                <derived name="TCPUDP.ET_Result" />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> result of the latest method call</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xInterruptEth">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> indicates the Ethernet was disturbed, while the TCP com. was in progress</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xConnectDone">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> flag indicates the result of the method Connect</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xCloseDone">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> flag indicates the result of the method Close</xhtml>
+              </documentation>
+            </variable>
+            <variable name="udiSentData">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Number of bytes sent to the server using the method Send</xhtml>
+              </documentation>
+            </variable>
+            <variable name="udiPeekedData">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Number of bytes peeked from the buffre using the method Peek</xhtml>
+              </documentation>
+            </variable>
+            <variable name="udiSizeReceivedData">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Number of bytes read from the buffer using the method Receive</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xAlarmConnect">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Alarm: connection failed</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xAlarmSend">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Alarm: not all bytes have been sent</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xAlarmPeek">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Alarm: Peek method</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xAlarmReceive">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Alarm: Receive method</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xAlarmTimeout">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Alarm: Timeout waiting for response</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xAlarmClose">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Alarm: Close method</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xWarnLenOfDataReceived">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Warning: Data length in received data doesn't meet the number of bytes available to read</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xWarnPeerDisconnect">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Warning: Peer has disconnected</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xDiag">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Indicates a Diag message is available</xhtml>
+              </documentation>
+            </variable>
+            <variable name="sDiagMessage">
+              <type>
+                <string />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Diag message created from the alarms and warnings</xhtml>
+              </documentation>
+            </variable>
+            <variable name="sStepFailed">
+              <type>
+                <string />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> String contains the name of the Step or Method which is failed to precise the result message </xhtml>
+              </documentation>
+            </variable>
+            <variable name="xDataOkay">
+              <type>
+                <BOOL />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Check of transmission ID okay, received data are valid</xhtml>
+              </documentation>
+            </variable>
+            <variable name="stDataSend">
+              <type>
+                <derived name="ST_Data" />
+              </type>
+            </variable>
+            <variable name="stDataReceive">
+              <type>
+                <derived name="ST_Data" />
+              </type>
+            </variable>
+            <variable name="abySendBuffer">
+              <type>
+                <array>
+                  <dimension lower="0" upper="(SIZEOF(stDataSend) - 1)" />
+                  <baseType>
+                    <BYTE />
+                  </baseType>
+                </array>
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> send buffer</xhtml>
+              </documentation>
+            </variable>
+            <variable name="abyReceiveBuffer">
+              <type>
+                <array>
+                  <dimension lower="0" upper="(SIZEOF(stDataReceive) - 1)" />
+                  <baseType>
+                    <BYTE />
+                  </baseType>
+                </array>
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> receive buffer</xhtml>
+              </documentation>
+            </variable>
+            <variable name="iState">
+              <type>
+                <INT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> current state of the staemachine</xhtml>
+              </documentation>
+            </variable>
+            <variable name="udiFillLevelSend">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> fill level of the send buffer</xhtml>
+              </documentation>
+            </variable>
+            <variable name="uiCountSendings">
+              <type>
+                <UINT />
+              </type>
+            </variable>
+            <variable name="udiFillLevelReceive">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> fill level of the receive buffer</xhtml>
+              </documentation>
+            </variable>
+            <variable name="udiReceiveBufferSize">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> max number of Bytes to be read using the Receive method, !!! Must not greater than the Buffer size! !!!</xhtml>
+              </documentation>
+            </variable>
+            <variable name="timTimeoutReceive">
+              <type>
+                <TIME />
+              </type>
+              <initialValue>
+                <simpleValue value="TIME#10s0ms" />
+              </initialValue>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> time to wait for the response from the server before closing the connection with timeout alarm</xhtml>
+              </documentation>
+            </variable>
+            <variable name="timStartWaiting">
+              <type>
+                <TIME />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> reference time for timeout monitoring</xhtml>
+              </documentation>
+            </variable>
+            <variable name="fbTcpClient">
+              <type>
+                <derived name="TCPUDP.FB_TCPClient2" />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> FB Instance</xhtml>
+              </documentation>
+            </variable>
+            <variable name="fbRTrigStart">
+              <type>
+                <derived name="Standard.R_TRIG" />
+              </type>
+            </variable>
+            <variable name="fbRTrigClearResult">
+              <type>
+                <derived name="Standard.R_TRIG" />
+              </type>
+            </variable>
+            <variable name="timLastComCycle">
+              <type>
+                <TIME />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> duration of last successful communication cycle</xhtml>
+              </documentation>
+            </variable>
+            <variable name="timStartCom">
+              <type>
+                <TIME />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> reference time for communication cycle measurement</xhtml>
+              </documentation>
+            </variable>
+            <variable name="xFirstCycle">
+              <type>
+                <BOOL />
+              </type>
+              <initialValue>
+                <simpleValue value="TRUE" />
+              </initialValue>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> indicates the first cycle of the program after a warmstart</xhtml>
+              </documentation>
+            </variable>
+          </localVars>
+        </interface>
+        <actions>
+          <action name="A30_Receive">
+            <body>
+              <ST>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">(* Response from TCP server is expected *)	
+IF fbTcpClient.PeerHasDisconnected THEN
+	// Peer has diconnected
+	xWarnPeerDisconnect	:= TRUE;
+	iState				:= 50;	// close the connection
+	
+ELSIF fbTcpClient.IsReadable THEN
+	xDataOkay	:= FALSE;	// reset the flag
+	// take a peek on the received data
+	udiPeekedData	:= fbTcpClient.Peek(i_pbyReceiveBuffer		:= ADR(abyReceiveBuffer),
+										i_udiReceiveBufferSize	:= 3);
+	// check the result of peek			
+	IF (udiPeekedData = 3) THEN
+		stDataReceive.uiTransId		:= abyReceiveBuffer[0];
+		stDataReceive.uiTransId		:= SHL(stDataReceive.uiTransId,8) OR abyReceiveBuffer[1];
+		stDataReceive.usiLenOfData	:= abyReceiveBuffer[2];
+		xDataOkay					:= (stDataSend.uiTransId = stDataReceive.uiTransId);
+	ELSE
+		etTcpClientResult	:= fbTcpClient.Result;	// Peek failed, check the result
+		sStepFailed			:= 'Peek: ';
+		xAlarmPeek			:= TRUE;
+	END_IF
+	
+	IF xDataOkay THEN
+		// set the data to be read from the buffer, NOTE: 2048 bytes is the limitation for M241 &amp; M251 controllers
+		udiReceiveBufferSize	:= LIMIT(1, MIN(SIZEOF(abyReceiveBuffer), (stDataReceive.usiLenOfData + 3)), 2048);
+		
+		// take the data from the buffer using the Receive method
+		udiFillLevelReceive	:=	0;	// initialize the fill-level
+		udiSizeReceivedData	:= fbTcpClient.Receive(	i_pbyReceiveBuffer		:= ADR(abyReceiveBuffer),
+													i_udiReceiveBufferSize	:= udiReceiveBufferSize,
+													iq_udiFillLevel			:= udiFillLevelReceive);
+		
+		IF (udiSizeReceivedData = 0) OR (fbTcpClient.Result &lt;&gt; TCPUDP.ET_Result.Ok) THEN
+			etTcpClientResult	:= fbTcpClient.Result;	// Peek failed, check the result
+			sStepFailed			:= 'Receive: ';
+			xAlarmReceive		:= TRUE;
+		ELSE
+		// convert the data to string
+		TCPUDP.FC_ReadSTRING(	i_pbyBuffer		:= ADR(abyReceiveBuffer[3]),
+								i_psString		:= ADR(stDataReceive.sData),
+								i_uiMaxLength	:= SIZEOF(stDataReceive.sData)-1,
+								i_xStopAtZero	:= TRUE);
+			
+		END_IF
+	ELSE
+		// Unknown data
+		stDataReceive.sData	:= 'Invalid TransmissionID';
+	END_IF
+	iState				:= 50;	// close the connection
+					
+ELSIF ((TIME() - timStartWaiting) &gt; timTimeoutReceive) THEN
+	// Timeout while waiting for response
+	xAlarmTimeout	:= TRUE;
+	iState			:= 50;	// close the connection
+END_IF</xhtml>
+              </ST>
+            </body>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>2aa12ee6-a3f1-4079-87aa-b6e40634bb44</ObjectId>
+              </data>
+            </addData>
+          </action>
+          <action name="A20_Send">
+            <body>
+              <ST>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">(* TCP Server is connected -&gt; Send data *)
+IF (udiFillLevelSend = 0) THEN
+	// prepare data to send: Transmission ID (2 Bytes), Length of Data (1 byte), and Data (STRING)
+	stDataSend.uiTransId	:=TIME_TO_UINT(TIME());
+	stDataSend.usiLenOfData	:=INT_TO_BYTE(Standard.LEN(stDataSend.sData)+1);
+	
+	abySendBuffer[0] :=UINT_TO_BYTE(SHR(stDataSend.uiTransId,8));
+	abySendBuffer[1] :=UINT_TO_BYTE(stDataSend.uiTransId);
+	abySendBuffer[2] :=stDataSend.usiLenOfData;
+	TCPUDP.FC_WriteSTRING(	i_pbyBuffer		:= ADR(abySendBuffer[3]),
+							i_psString		:= ADR(stDataSend.sData),
+							i_uiMaxLength	:= SIZEOF(abySendBuffer)-3);
+							
+	// determine the number of bytes to be sent, NOTE: 2048 bytes is the limitation for M241 &amp; M251 controllers
+	udiFillLevelSend := MIN((stDataSend.usiLenOfData + 3), 2048);
+END_IF
+
+// send data
+udiSentData	:= fbTcpClient.Send(i_pbySendBuffer	:= ADR(abySendBuffer),
+								iq_udiFillLevel	:= udiFillLevelSend);
+					
+// count the number of Send calls
+uiCountSendings	:= uiCountSendings + 1;
+		
+// check the result of sending
+IF (udiSentData = 0) OR (fbTcpClient.Result &lt;&gt; TCPUDP.ET_Result.Ok) THEN	
+	// no data have been sent
+	etTcpClientResult	:= fbTcpClient.Result;	// transmission failed, check the result
+	sStepFailed			:= 'Send: ';
+	xAlarmSend			:= TRUE;	// set an alarm
+	iState				:= 50;		// go to close
+ELSIF (udiFillLevelSend &gt; 0) THEN
+	// not all data have been sent, remaining data will be sent in the next scan
+	;
+ELSIF (udiFillLevelSend = 0) THEN
+	// all data have been sent
+	iState			:= 30;		// all data have been sent, go to receive
+	timStartWaiting	:= TIME();	// initialize the timer
+END_IF
+
+IF (iState &lt;&gt; 20) THEN
+	// when leaving this state initialize the variables
+	udiFillLevelSend	:= 0;
+END_IF</xhtml>
+              </ST>
+            </body>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+                <ObjectId>6da6678b-936e-42ee-98c5-a6a8e3667e9d</ObjectId>
+              </data>
+            </addData>
+          </action>
+        </actions>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">(* Check the Ethernet Status of the controller *)
+IF NOT GVL.g_xEthReady THEN
+	xInterruptEth	:= xComInProgress;
+	xComInProgress	:= FALSE;	// reset the status flag
+	iState			:= 100;	// go into state 100 - do nothing
+ELSE
+	IF (iState = 100) THEN
+		IF (fbTcpClient.State &lt;&gt; TCPUDP.ET_State.Idle) THEN
+			iState	:= 50;
+		ELSE
+			iState	:= 0;
+		END_IF
+	END_IF
+	xInterruptEth	:= FALSE;
+END_IF 
+
+(* Visu variables - inputs *)
+// Monitor rising edges of commands *)
+fbRTrigStart		(CLK:= GVL_VisuTcpClient.g_xCmdStart);
+fbRTrigClearResult	(CLK:= GVL_VisuTcpClient.g_xCmdClearResult);
+IF (iState = 0) OR xFirstCycle THEN
+	// only in state "wait for command" the input from the visu is accepted
+	stDataSend.sData	:= GVL_VisuTcpClient.g_stDataToSend.sData;
+	timTimeoutReceive	:= GVL_VisuTcpClient.g_timTimeoutReceive;
+	sIpAddrServer		:= GVL_VisuTcpClient.g_sIpAddrServer;
+	uiTcpServerPort		:= GVL_VisuTcpClient.g_uiTcpServerPort;
+	xUseTls							:= GVL_VisuTcpClient.g_xTlsSelected;
+	stTlsSettings.etCertVerifyMode	:= GVL_VisuTcpClient.g_etCertVerifyMode;
+ELSE
+	// update the visu input while communication is in progress
+	GVL_VisuTcpClient.g_stDataToSend.sData	:= stDataSend.sData;
+	GVL_VisuTcpClient.g_timTimeoutReceive	:= timTimeoutReceive;
+	GVL_VisuTcpClient.g_sIpAddrServer		:= sIpAddrServer;
+	GVL_VisuTcpClient.g_uiTcpServerPort		:= uiTcpServerPort;
+END_IF
+
+(* Clear the result *)
+IF (fbRTrigClearResult.Q OR (fbRTrigStart.Q AND iState = 0)) THEN
+	// reset all alarms and warnings
+	xAlarmConnect			:= FALSE;
+	xAlarmSend				:= FALSE;
+	xAlarmPeek				:= FALSE;
+	xAlarmReceive			:= FALSE;
+	xAlarmTimeout			:= FALSE;
+	xAlarmClose				:= FALSE;
+	xWarnLenOfDataReceived	:= FALSE;
+	xWarnPeerDisconnect		:= FALSE;
+	
+	fbTcpClient.ResetResult();
+	etTcpClientResult		:= TCPUDP.ET_Result.Ok;
+	sStepFailed				:='';
+END_IF
+
+(* TCP Client state *)
+etTcpClientState		:= fbTcpClient.State;
+
+(* State machine *)
+CASE iState OF
+	0: (* Wait for command to connect *)
+		IF xComInProgress THEN
+			xComInProgress	:= FALSE;
+			timLastComCycle	:= SEL(xDiag,(TIME()- timStartCom),timLastComCycle);
+		END_IF
+		
+		IF (etTcpClientState &lt;&gt; TCPUDP.ET_State.Idle) THEN
+			iState	:= 50;	// not ready for connect, first perform a Close command
+			
+		ELSIF fbRTrigStart.Q THEN
+			(* init variables *)
+			uiCountSendings		:= 0;
+			timStartCom			:= TIME();
+			// init the receive buffer
+			SysMem.SysMemSet(pDest:=ADR(abyReceiveBuffer),udiValue:=0,udiCount:=SIZEOF(abyReceiveBuffer));
+			SysMem.SysMemSet(pDest:=ADR(stDataReceive),udiValue:=0,udiCount:=SIZEOF(stDataReceive));
+			
+			(* Connect to server *)
+			IF NOT xUseTls THEN
+				xConnectDone	:= fbTcpClient.Connect(	i_sServerIP		:= sIpAddrServer,
+														i_uiServerPort	:= uiTcpServerPort);
+			ELSE
+				xConnectDone	:= fbTcpClient.ConnectTls(	i_sServerIP		:= sIpAddrServer,
+															i_uiServerPort	:= uiTcpServerPort,
+															i_stTlsSettings := stTlsSettings);
+			END_IF			
+
+	
+			IF xConnectDone THEN
+				iState				:= 10;	// wait for the connection
+				xComInProgress		:= TRUE;
+			ELSE
+				etTcpClientResult	:= fbTcpClient.Result;	// connection failed, check the result
+				sStepFailed			:= 'Connect: ';
+				xAlarmConnect		:= TRUE;
+			END_IF
+			
+		END_IF		
+	
+	10:	(* Connection in progress *)
+		IF (etTcpClientState &lt;&gt; TCPUDP.ET_State.Connecting) THEN
+			IF (etTcpClientState = TCPUDP.ET_State.Connected) THEN
+				iState	:= 20;	// TCP server is connected
+			ELSE
+				etTcpClientResult	:= fbTcpClient.Result;	// connection failed, check the result
+				sStepFailed			:= 'Connect: ';
+				xAlarmConnect		:= TRUE;
+				iState				:= 50;					// connection failed, close the socket
+			END_IF
+		END_IF
+	
+	20:	(* TCP Server is connected -&gt; Send data *)
+		A20_Send();
+	
+	30:	(* Response from TCP server is expected *)
+		A30_Receive();
+				
+	//40:	(* Shutdown - no more data will be sent *)
+	//	shutdown not implemented
+			
+	50:	(* Close the connection/socket due to an error during Connect *)
+		xCloseDone	:= fbTcpClient.Close();
+		iState	:= 0;	// go to wait for command
+		
+	100:(* Ethernet Interface of the controller not ready *)
+		;	// do nothing
+		
+END_CASE
+
+(* Create diagnostic message *)
+IF (iState = 100) THEN		
+	sDiagMessage	:= 'Ethernet link not ready';
+	xDiag			:= TRUE;	
+ELSIF xAlarmConnect THEN		
+	sDiagMessage	:= 'Connection failed';
+	xDiag			:= TRUE;
+ELSIF xAlarmSend THEN		
+	sDiagMessage	:= 'Send data failed';
+	xDiag			:= TRUE;
+ELSIF xAlarmPeek THEN		
+	sDiagMessage	:= 'Peeking received data failed';
+	xDiag			:= TRUE;
+ELSIF xAlarmReceive THEN		
+	sDiagMessage	:= 'No data could be read';
+	xDiag			:= TRUE;
+ELSIF xAlarmTimeout THEN		
+	sDiagMessage	:= 'Timeout while waiting for response';
+	xDiag			:= TRUE;
+ELSIF xAlarmClose THEN		
+	sDiagMessage	:= 'Close connection failed';
+	xDiag			:= TRUE;
+ELSIF xWarnLenOfDataReceived THEN		
+	sDiagMessage	:= 'Length of received data inconsistant';
+	xDiag			:= TRUE;
+ELSIF xWarnPeerDisconnect THEN		
+	sDiagMessage	:= 'Peer has disconnected';
+	xDiag			:= TRUE;
+ELSE			
+	sDiagMessage	:= 'No alarm or warning';
+	xDiag			:= FALSE;
+END_IF
+
+(* Visu variables - outputs *)
+GVL_VisuTcpClient.g_sTcpClientState				:= TCPUDP.FC_EtStateToString(i_etState:= etTcpClientState);
+GVL_VisuTcpClient.g_sTcpClientResult			:= Standard.CONCAT(sStepFailed, TCPUDP.FC_EtResultToString(i_etResult:= etTcpClientResult));
+GVL_VisuTcpClient.g_stDataToSend.uiTransId		:= stDataSend.uiTransId;
+GVL_VisuTcpClient.g_stDataToSend.usiLenOfData	:= stDataSend.usiLenOfData;
+GVL_VisuTcpClient.g_stDataReceived.uiTransId	:= stDataReceive.uiTransId;
+GVL_VisuTcpClient.g_stDataReceived.usiLenOfData	:= stDataReceive.usiLenOfData;
+GVL_VisuTcpClient.g_stDataReceived.sData		:= stDataReceive.sData;
+GVL_VisuTcpClient.g_xComInProgress				:= xComInProgress;
+GVL_VisuTcpClient.g_xDiag						:= xDiag;
+GVL_VisuTcpClient.g_sDiagMessage				:= sDiagMessage;
+GVL_VisuTcpClient.g_timLastComCycle				:= timLastComCycle;
+GVL_VisuTcpClient.g_xTlsSelected				:= xUseTls;
+GVL_VisuTcpClient.g_sCertVerifyMode				:= TCPUDP.FC_EtCertVerifyModeToString(stTlsSettings.etCertVerifyMode);
+
+(* reset the first cycle information *)
+xFirstCycle	R= xFirstCycle;</xhtml>
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>a3b91459-0526-41e4-9119-0b1ee4f27b73</ObjectId>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Folder Name="TcpUdpCommunicationExample">
+          <Folder Name="POUs">
+            <Object Name="SR_TcpClient" ObjectId="a3b91459-0526-41e4-9119-0b1ee4f27b73">
+              <Object Name="A30_Receive" ObjectId="2aa12ee6-a3f1-4079-87aa-b6e40634bb44" />
+              <Object Name="A20_Send" ObjectId="6da6678b-936e-42ee-98c5-a6a8e3667e9d" />
+            </Object>
+          </Folder>
+        </Folder>
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>
